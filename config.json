@@ -1,39 +1,6 @@
 {
     "gitmojis": [
         {
-            "emoji": "🐛",
-            "entity": "&#x1f41b;",
-            "code": ":bug:",
-            "description": "Fix a bug",
-            "semver": "patch",
-            "type": "fix"
-        },
-        {
-            "emoji": "📝",
-            "entity": "&#x1f4dd;",
-            "code": ":memo:",
-            "description": "Add or update documentation",
-            "semver": null,
-            "type": "docs"
-        },
-        {
-            "emoji": "✅",
-            "entity": "&#x2705;",
-            "code": ":white_check_mark:",
-            "description": "Add or update tests",
-            "name": "white-check-mark",
-            "semver": null,
-            "type": "test"
-        },
-        {
-            "emoji": "♻️",
-            "entity": "&#x2672;",
-            "code": ":recycle:",
-            "description": "A code change that neither fixes a bug nor adds a feature",
-            "type": "refactor",
-            "semver": null
-        },
-        {
             "emoji": "✨",
             "entity": "&#x2728;",
             "code": ":sparkles:",
@@ -43,19 +10,46 @@
             "type": "feat"
         },
         {
-            "emoji": "✏️",
-            "entity": "&#59161;",
-            "code": ":pencil2:",
-            "description": "Fix typos",
-            "name": "pencil2",
+            "emoji": "🐛",
+            "entity": "&#x1f41b;",
+            "code": ":bug:",
+            "description": "Fix a bug",
+            "name": "bug",
             "semver": "patch",
-            "type": "style"
+            "type": "fix"
+        },
+        {
+            "emoji": "♻️",
+            "entity": "&#x2672;",
+            "code": ":recycle:",
+            "description": "A code change that neither fixes a bug nor adds a feature",
+            "name": "recycle",
+            "semver": null,
+            "type": "refactor"
+        },
+        {
+            "emoji": "📝",
+            "entity": "&#x1f4dd;",
+            "code": ":memo:",
+            "description": "Update documentation",
+            "name": "memo",
+            "semver": null,
+            "type": "docs"
+        },
+        {
+            "emoji": "✅",
+            "entity": "&#x2705;",
+            "code": ":white_check_mark:",
+            "description": "Update tests",
+            "name": "white-check-mark",
+            "semver": null,
+            "type": "test"
         },
         {
             "emoji": "🔧",
             "entity": "&#x1f527;",
             "code": ":wrench:",
-            "description": "Add or update configuration files",
+            "description": "Update configuration files",
             "name": "wrench",
             "semver": "patch",
             "type": "chore"
