@@ -132,8 +132,8 @@ class Commit(object):
 
     def to_clipboard(self) -> None:
         pyperclip.copy(self.commit)
-        print(self.commit)
-        print("Copied to clipboard")
+        print("\n"+self.commit)
+        print("\nCopied to clipboard")
 
 
 if __name__ == "__main__":
