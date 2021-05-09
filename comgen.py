@@ -83,7 +83,25 @@ class Commit(object):
                 fg('red') + f"Max. subject length {max_length} characters" + attr("reset"))
 
     def commit_body(self) -> None:
-        self.body = self.prompt("Description (why): ", optional=True)
+        self.body = self.form_lines(self.prompt("Description (why): ", optional=True))
+
+    def form_lines(self, raw: str) -> str:
+        max_length = int(self.config["max_body_line_length"])
+        lst = raw.strip().split()
+        out = []
+        line = ""
+        for i in lst:
+            if len(line) == 0:
+                line = i
+                continue
+            if len(line+i) < max_length:
+                line = line + " " + i
+            else:
+                out.append(line)
+                line = i
+        else:
+            out.append(line)
+        return "\n".join(out)
 
     def commit_footer(self) -> None:
         if self.prompt("API change [y|n]: ", optional=True) == "y":

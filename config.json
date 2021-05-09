@@ -56,7 +56,7 @@
         }
     ],
     "subject_length": "50",
-    "body_line_length": "72",
+    "max_body_line_length": "72",
     "scope": [
         {
             "types": [
