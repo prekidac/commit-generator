@@ -99,7 +99,7 @@ class Commit(object):
 
     def commit_footer(self) -> None:
         if self.prompt("API change [y|n]: ", optional=True) == "y":
-            self.breaking_change = self.prompt("Describe change: ")
+            self.breaking_change = self.form_lines(self.prompt("Describe change: "))
         else:
             self.breaking_change = False
 
