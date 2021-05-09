@@ -54,18 +54,18 @@ class Commit(object):
     def commit_scope(self) -> None:
         lst = self.all_scopes()
         self.scope = self.prompt(
-            f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope of change: ", optional=True)
+            f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope: ", optional=True)
         if self.scope not in lst:
             self.scope = None
 
     def commit_subject(self) -> None:
-        self.subject = self.prompt("Change subject: ")
+        self.subject = self.prompt("Message (what): ")
 
     def commit_body(self) -> None:
-        self.body = self.prompt("Change body: ", optional=True)
+        self.body = self.prompt("Description (why): ", optional=True)
 
     def commit_footer(self) -> None:
-        if self.prompt("Breaking change [y|n]: ", optional=True) == "y":
+        if self.prompt("API change [y|n]: ", optional=True) == "y":
             self.breaking_change = self.prompt("Describe change: ")
         else:
             self.breaking_change = False
