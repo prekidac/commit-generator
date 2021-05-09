@@ -3,6 +3,8 @@ import logging
 from typing import ChainMap
 import pyperclip
 import json
+from pathlib import Path
+import os
 from colored import fg, attr
 
 FORMAT = "%(filename)s: %(levelname)s: %(message)s: line: %(lineno)s"
@@ -23,7 +25,8 @@ class Commit(object):
             self.commit_footer()
 
     def load_config(self) -> None:
-        with open("config.json", "r") as f:
+        config = os.path.join(Path.home(), ".local/share/commit-config.json")
+        with open(config, "r") as f:
             self.config = json.load(f)
 
     def all_types(self) -> dict:
@@ -83,7 +86,8 @@ class Commit(object):
                 fg('red') + f"Max. subject length {max_length} characters" + attr("reset"))
 
     def commit_body(self) -> None:
-        self.body = self.form_lines(self.prompt("Description (why): ", optional=True))
+        self.body = self.form_lines(self.prompt(
+            "Description (why): ", optional=True))
 
     def form_lines(self, raw: str) -> str:
         max_length = int(self.config["max_body_line_length"])
