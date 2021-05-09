@@ -70,10 +70,12 @@
         },
         {
             "types": [
-                "docs",
-                "markdown"
+                "docs"
             ],
-            "values": []
+            "values": [
+                "markdown",
+                "docs"
+            ]
         },
         {
             "types": [
