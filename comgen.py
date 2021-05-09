@@ -34,7 +34,11 @@ class Commit(object):
         return dct
 
     def all_scopes(self) -> list:
-        return self.config["scopes"]
+        all_scopes = self.config["scope"]
+        for i in all_scopes:
+            if self.type in i["types"]:
+                return i["values"]
+            return []
 
     def prompt(self, prompt: str, optional: bool = False) -> str:
         while True:
@@ -44,9 +48,6 @@ class Commit(object):
 
     def commit_type(self) -> None:
         dct = self.all_types()
-        for key, value in dct.items():
-            print(
-                f"{fg('red')+attr('bold')+key+attr('reset')+fg('blue')+' - '+value+attr('reset')}")
         while True:
             self.type = self.prompt(f"Type of change: ")
             if self.type.rstrip("!") in dct.keys():
@@ -56,9 +57,14 @@ class Commit(object):
                 else:
                     self.breaking_change = False
                 break
+            for key, value in dct.items():
+                print(
+                    f"{fg('red')+attr('bold')+key+attr('reset')+fg('blue')+' - '+value+attr('reset')}")
 
     def commit_scope(self) -> None:
         lst = self.all_scopes()
+        if not lst:
+            return None
         self.scope = self.prompt(
             f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope: ", optional=True)
         if self.scope not in lst:

@@ -53,12 +53,33 @@
             "name": "wrench",
             "semver": "patch",
             "type": "chore"
-          }
+        }
     ],
-    "scopes": [
-        "main",
-        "docs",
-        "makefile",
-        "config"
+    "scope": [
+        {
+            "types": [
+                "feat",
+                "fix",
+                "refactor"
+            ],
+            "values": [
+                "main"
+            ]
+        },
+        {
+            "types": [
+                "docs"
+            ],
+            "values": []
+        },
+        {
+            "types": [
+                "chore"
+            ],
+            "values": [
+                "makefile",
+                "config"
+            ]
+        }
     ]
 }
