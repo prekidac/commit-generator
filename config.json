@@ -62,8 +62,9 @@
           }
     ],
     "scopes": [
+        "main",
         "docs",
-        "http",
-        "main"
+        "makefile",
+        "config"
     ]
 }
