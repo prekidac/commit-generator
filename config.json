@@ -49,7 +49,7 @@
             "emoji": "🔧",
             "entity": "&#x1f527;",
             "code": ":wrench:",
-            "description": "Update configuration files",
+            "description": "Update config and other files",
             "name": "wrench",
             "semver": "patch",
             "type": "chore"
@@ -68,7 +68,8 @@
         },
         {
             "types": [
-                "docs"
+                "docs",
+                "markdown"
             ],
             "values": []
         },
