@@ -19,14 +19,15 @@ class Commit(object):
         self.commit_scope()
         self.commit_subject()
         self.commit_body()
-        self.commit_footer()
+        if self.breaking_change or self.body:
+            self.commit_footer()
 
     def load_config(self) -> None:
         with open("config.json", "r") as f:
             self.config = json.load(f)
 
     def all_types(self) -> dict:
-        """type: description"""
+        """return: {type: description}"""
         dct = {}
         for i in self.config["gitmojis"]:
             dct[i["type"]] = i["description"]
@@ -48,7 +49,12 @@ class Commit(object):
                 f"{fg('red')+attr('bold')+key+attr('reset')+fg('blue')+' - '+value+attr('reset')}")
         while True:
             self.type = self.prompt(f"Type of change: ")
-            if self.type in dct.keys():
+            if self.type.rstrip("!") in dct.keys():
+                if self.type[-1] == "!":
+                    self.breaking_change = True
+                    self.type = self.type.rstrip("!")
+                else:
+                    self.breaking_change = False
                 break
 
     def commit_scope(self) -> None:
