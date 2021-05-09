@@ -72,7 +72,15 @@ class Commit(object):
                 self.scope = None
 
     def commit_subject(self) -> None:
-        self.subject = self.prompt("Message (what): ")
+        max_length = int(self.config["subject_length"])
+        while True:
+            self.subject = self.prompt("Message (what): ")
+            if len(self.subject) <= max_length:
+                break
+            print(self.subject[0:max_length] + fg("red") +
+                  self.subject[max_length:]+attr("reset"))
+            print(
+                fg('red') + f"Max. subject length {max_length} characters" + attr("reset"))
 
     def commit_body(self) -> None:
         self.body = self.prompt("Description (why): ", optional=True)
