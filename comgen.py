@@ -38,7 +38,7 @@ class Commit(object):
         for i in all_scopes:
             if self.type in i["types"]:
                 return i["values"]
-            return []
+        return []
 
     def prompt(self, prompt: str, optional: bool = False) -> str:
         while True:
@@ -64,11 +64,12 @@ class Commit(object):
     def commit_scope(self) -> None:
         lst = self.all_scopes()
         if not lst:
-            return None
-        self.scope = self.prompt(
-            f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope: ", optional=True)
-        if self.scope not in lst:
             self.scope = None
+        else:
+            self.scope = self.prompt(
+                f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope: ", optional=True)
+            if self.scope not in lst:
+                self.scope = None
 
     def commit_subject(self) -> None:
         self.subject = self.prompt("Message (what): ")
