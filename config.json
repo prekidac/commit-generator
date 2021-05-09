@@ -4,7 +4,7 @@
             "emoji": "🐛",
             "entity": "&#x1f41b;",
             "code": ":bug:",
-            "description": "Fix a bug.",
+            "description": "Fix a bug",
             "semver": "patch",
             "type": "fix"
         },
@@ -12,7 +12,7 @@
             "emoji": "📝",
             "entity": "&#x1f4dd;",
             "code": ":memo:",
-            "description": "Add or update documentation.",
+            "description": "Add or update documentation",
             "semver": null,
             "type": "docs"
         },
@@ -20,7 +20,7 @@
             "emoji": "✅",
             "entity": "&#x2705;",
             "code": ":white_check_mark:",
-            "description": "Add or update tests.",
+            "description": "Add or update tests",
             "name": "white-check-mark",
             "semver": null,
             "type": "test"
@@ -29,7 +29,7 @@
             "emoji": "♻️",
             "entity": "&#x2672;",
             "code": ":recycle:",
-            "description": "Refactor code.",
+            "description": "A code change that neither fixes a bug nor adds a feature",
             "type": "refactor",
             "semver": null
         },
@@ -37,7 +37,7 @@
             "emoji": "✨",
             "entity": "&#x2728;",
             "code": ":sparkles:",
-            "description": "Introduce new features.",
+            "description": "New feature",
             "name": "sparkles",
             "semver": "minor",
             "type": "feat"
@@ -46,7 +46,7 @@
             "emoji": "✏️",
             "entity": "&#59161;",
             "code": ":pencil2:",
-            "description": "Fix typos.",
+            "description": "Fix typos",
             "name": "pencil2",
             "semver": "patch",
             "type": "style"
@@ -55,7 +55,7 @@
             "emoji": "🔧",
             "entity": "&#x1f527;",
             "code": ":wrench:",
-            "description": "Add or update configuration files.",
+            "description": "Add or update configuration files",
             "name": "wrench",
             "semver": "patch",
             "type": "chore"
