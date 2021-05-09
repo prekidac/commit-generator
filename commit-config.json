@@ -44,47 +44,15 @@
             "name": "white-check-mark",
             "semver": null,
             "type": "test"
-        },
-        {
-            "emoji": "🔧",
-            "entity": "&#x1f527;",
-            "code": ":wrench:",
-            "description": "Update auxiliary files: config, make",
-            "name": "wrench",
-            "semver": "patch",
-            "type": "chore"
         }
     ],
     "subject_length": "50",
     "max_body_line_length": "72",
-    "scope": [
-        {
-            "types": [
-                "feat",
-                "fix",
-                "refactor"
-            ],
-            "values": [
-                "main"
-            ]
-        },
-        {
-            "types": [
-                "docs"
-            ],
-            "values": [
-                "markdown",
-                "docs"
-            ]
-        },
-        {
-            "types": [
-                "chore"
-            ],
-            "values": [
-                "makefile",
-                "config"
-            ]
-        }
+    "scopes": [
+        "main",
+        "markdown",
+        "docs",
+        "makefile",
+        "config"
     ]
 }

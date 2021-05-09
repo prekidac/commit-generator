@@ -36,13 +36,6 @@ class Commit(object):
             dct[i["type"]] = i["description"]
         return dct
 
-    def all_scopes(self) -> list:
-        all_scopes = self.config["scope"]
-        for i in all_scopes:
-            if self.type in i["types"]:
-                return i["values"]
-        return []
-
     def prompt(self, prompt: str, optional: bool = False) -> str:
         while True:
             i = input(prompt).rstrip(".")
@@ -65,14 +58,11 @@ class Commit(object):
                     f"{fg('red')+attr('bold')+key+attr('reset')+fg('blue')+' - '+value+attr('reset')}")
 
     def commit_scope(self) -> None:
-        lst = self.all_scopes()
-        if not lst:
+        lst = self.config["scopes"]
+        self.scope = self.prompt(
+            f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope: ", optional=True)
+        if self.scope not in lst:
             self.scope = None
-        else:
-            self.scope = self.prompt(
-                f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope: ", optional=True)
-            if self.scope not in lst:
-                self.scope = None
 
     def commit_subject(self) -> None:
         max_length = int(self.config["subject_length"])
