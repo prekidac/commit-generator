@@ -87,9 +87,9 @@ class Commit(object):
         for i in lst:
             if i["type"] == self.type:
                 self.emoji = i["emoji"]
-        commit = self.emoji + ' ' + self.type
+        commit = self.emoji + ' ' + self.type.lower()
         if self.scope:
-            commit = commit + f"({self.scope}): "
+            commit = commit + f"({self.scope.lower()}): "
         else:
             commit = commit + ": "
         commit = commit + self.subject.lower()
