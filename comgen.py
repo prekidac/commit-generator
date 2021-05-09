@@ -37,7 +37,7 @@ class Commit(object):
 
     def prompt(self, prompt: str, optional: bool = False) -> str:
         while True:
-            i = input(prompt)
+            i = input(prompt).rstrip(".")
             if optional or i != "":
                 return i
 
