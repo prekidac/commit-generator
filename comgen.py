@@ -90,7 +90,7 @@ class Commit(object):
         if self.body:
             commit = commit + "\n\n" + self.body.capitalize()
         if self.breaking_change:
-            commit = commit + "\n\nBREAKING CHANGE: " + self.breaking_change
+            commit = commit + "\n\nBREAKING CHANGE:\n\n" + self.breaking_change
         self.commit = commit
 
     def to_clipboard(self) -> None:
