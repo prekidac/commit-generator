@@ -4,7 +4,6 @@
             "emoji": "➕",
             "entity": "&#10133;",
             "code": ":heavy_plus_sign:",
-            "description": "Add new",
             "name": "heavy-plus-sign",
             "type": "add"
         },
@@ -12,7 +11,6 @@
             "emoji": "➖",
             "entity": "&#10134;",
             "code": ":heavy_minus_sign:",
-            "description": "Remove",
             "name": "heavy-minus-sign",
             "type": "remove"
           },
@@ -20,7 +18,6 @@
             "emoji": "🔧",
             "entity": "&#x1f527;",
             "code": ":wrench:",
-            "description": "Change",
             "name": "wrench",
             "type": "change"
           },
@@ -28,7 +25,6 @@
             "emoji": "🌱",
             "entity": "&#127793;",
             "code": ":seedling:",
-            "description": "Same, but different",
             "name": "seedling",
             "type": "rework"
           },
@@ -36,7 +32,6 @@
             "emoji": "🐛",
             "entity": "&#x1f41b;",
             "code": ":bug:",
-            "description": "Fix a bug",
             "name": "bug",
             "type": "fix"
           }
