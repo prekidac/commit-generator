@@ -21,8 +21,7 @@ class Commit(object):
         self.commit_scope()
         self.commit_subject()
         self.commit_body()
-        if self.breaking_change or self.body:
-            self.commit_footer()
+        self.commit_footer()
 
     def load_config(self) -> None:
         config = os.path.join(Path.home(), ".local/share/commit-config.json")
@@ -95,11 +94,15 @@ class Commit(object):
         return "\n".join(out)
 
     def commit_footer(self) -> None:
-        if self.prompt("API change [y|n]: ", optional=True) == "y":
+        if self.body:
+            if self.prompt("API change [y|n]: ", optional=True) == "y":
+                self.breaking_change = self.form_lines(
+                    self.prompt("Describe change: "))
+            else:
+                self.breaking_change = False
+        elif self.breaking_change:
             self.breaking_change = self.form_lines(
-                self.prompt("Describe change: "))
-        else:
-            self.breaking_change = False
+                self.prompt("Describe API change: "))
 
     def create_commit(self) -> None:
         lst = self.config["gitmojis"]
@@ -108,9 +111,10 @@ class Commit(object):
                 self.emoji = i["emoji"]
         commit = self.emoji + ' ' + self.type.lower()
         if self.scope:
-            commit = commit + f"({self.scope.lower()}): "
-        else:
-            commit = commit + ": "
+            commit = commit + f"({self.scope.lower()})"
+        if self.breaking_change:
+            commit = commit + "!"
+        commit = commit + ": "
         commit = commit + self.subject.lower()
         if self.body:
             commit = commit + "\n\n" + self.body.capitalize()
