@@ -1,16 +1,10 @@
 #! /usr/bin/env python3
-import logging
 from typing import ChainMap
 import pyperclip
 import json
 from pathlib import Path
 import os
 from colored import fg, attr
-
-FORMAT = "%(filename)s: %(levelname)s: %(message)s: line: %(lineno)s"
-logging.basicConfig(format=FORMAT, level=logging.DEBUG)
-
-# logging.disable(logging.WARNING)
 
 
 class Commit(object):
