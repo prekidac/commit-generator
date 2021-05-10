@@ -3,7 +3,18 @@ import pyperclip
 import json
 from pathlib import Path
 import os
-from colored import fg, attr
+from questionary import Style
+import questionary
+
+custom_style = Style([
+    ('separator', '#6C6C6C'),
+    ('qmark', '#FF9D00 bold'),
+    ('selected', '#5F819D'),
+    ('pointer', '#FF9D00 bold'),
+    ('instruction', ''),
+    ('answer', '#5F819D bold'),
+    ('question', '')
+])
 
 
 class Commit(object):
@@ -27,52 +38,33 @@ class Commit(object):
             lst.append(i["type"])
         return lst
 
-    def prompt(self, prompt: str, optional: bool = False) -> str:
-        while True:
-            i = input(prompt).rstrip(".")
-            if optional or i != "":
-                return i
-
     def commit_type(self) -> None:
         lst = self.all_types()
-        while True:
-            self.type = self.prompt("Type of change: ")
-            if self.type.rstrip("!") in lst:
-                if self.type[-1] == "!":
-                    self.breaking_change = True
-                    self.type = self.type.rstrip("!")
-                else:
-                    self.breaking_change = False
-                break
-            print(fg('blue')+" ".join(lst)+attr('reset'))
+        self.type = questionary.select(
+            "Type of change",
+            lst,
+            style=custom_style).ask()
 
     def commit_scope(self) -> None:
         lst = self.config["scopes"]
-        print(fg("blue") + " ".join(lst) + attr("reset"))
-        while True:
-            self.scope = self.prompt("Scope: ").strip().split()
-            for i in self.scope:
-                if i not in lst:
-                    print(fg("red") +
-                          "Space separated multiple choice" + attr("reset"))
-                    break
-            else:
-                break
+        self.scope = questionary.checkbox(
+            "Scope",
+            lst,
+            style=custom_style,
+            validate=lambda x: "Pick one or more" if not x else True).ask()
 
     def commit_subject(self) -> None:
         max_length = int(self.config["subject_length"])
-        while True:
-            self.subject = self.prompt("Message (what): ")
-            if len(self.subject) <= max_length:
-                break
-            print(self.subject[0:max_length] + fg("red") +
-                  self.subject[max_length:]+attr("reset"))
-            print(
-                fg('red') + f"Max. subject length {max_length} characters" + attr("reset"))
+        self.subject = questionary.text(
+            "Message (what):",
+            validate=lambda x: f"Subject length 5 - {max_length} characters"
+            if len(x) > max_length or len(x) < 5 else True).ask()
 
     def commit_body(self) -> None:
-        self.body = self.form_lines(self.prompt(
-            "Description (why): ", optional=True))
+        self.body = self.form_lines(
+            questionary.text(
+                "Description (why):",
+                style=custom_style).ask())
 
     def form_lines(self, raw: str) -> str:
         max_length = int(self.config["max_body_line_length"])
@@ -93,24 +85,19 @@ class Commit(object):
         return "\n".join(out)
 
     def commit_footer(self) -> None:
-        if self.body:
-            if self.prompt("API change [y|n]: ", optional=True) == "y":
-                self.breaking_change = self.form_lines(
-                    self.prompt("Describe change: "))
-            else:
-                self.breaking_change = False
-        elif self.breaking_change:
+        if questionary.confirm("API change:", style=custom_style).ask():
             self.breaking_change = self.form_lines(
-                self.prompt("Describe API change: "))
+                questionary.text(
+                    "Describe API change:",
+                    style=custom_style,
+                    validate=lambda x: "Type" if len(x)<5 else True).ask())
+        else:
+            self.breaking_change = False
         if self.type == "fix":
-            while True:
-                try:
-                    self.fixes = self.prompt("Fixes issue no.: ", optional=True)
-                    if self.fixes:
-                        self.fixes = int(self.fixes)
-                    break
-                except:
-                    print(fg("red") + "Must be a number" + attr("reset"))
+            self.fixes = questionary.text(
+                "Fixes issue no.:",
+                style=custom_style,
+                validate=lambda x: "Number" if x and type(x) != int else True).ask()
         else:
             self.fixes = False
 
