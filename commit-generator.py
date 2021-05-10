@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-from typing import ChainMap
 import pyperclip
 import json
 from pathlib import Path
