@@ -54,7 +54,8 @@ class Commit(object):
             self.scope = self.prompt("Scope: ").strip().split()
             for i in self.scope:
                 if i not in lst:
-                    print(fg("red") + "Space separated multiple choice" + attr("reset"))
+                    print(fg("red") +
+                          "Space separated multiple choice" + attr("reset"))
                     break
             else:
                 break
@@ -102,6 +103,17 @@ class Commit(object):
         elif self.breaking_change:
             self.breaking_change = self.form_lines(
                 self.prompt("Describe API change: "))
+        if self.type == "fix":
+            while True:
+                try:
+                    self.fixes = self.prompt("Fixes issue no.: ", optional=True)
+                    if self.fixes:
+                        self.fixes = int(self.fixes)
+                    break
+                except:
+                    print(fg("red") + "Must be a number" + attr("reset"))
+        else:
+            self.fixes = False
 
     def create_commit(self) -> None:
         lst = self.config["gitmojis"]
@@ -116,9 +128,11 @@ class Commit(object):
         commit = commit + ": "
         commit = commit + self.subject.lower()
         if self.body:
-            commit = commit + "\n\n" + self.body.capitalize()
+            commit = commit + "\n\n" + self.body.lower()
         if self.breaking_change:
             commit = commit + "\n\nBREAKING CHANGE:\n\n" + self.breaking_change
+        if self.fixes:
+            commit = commit + f"\n\n\nFixes #{self.fixes}"
         self.commit = commit
 
     def to_clipboard(self) -> None:
