@@ -37,7 +37,7 @@ class Commit(object):
     def commit_type(self) -> None:
         lst = self.all_types()
         while True:
-            self.type = self.prompt(f"Type of change: ")
+            self.type = self.prompt("Type of change: ")
             if self.type.rstrip("!") in lst:
                 if self.type[-1] == "!":
                     self.breaking_change = True
@@ -49,10 +49,15 @@ class Commit(object):
 
     def commit_scope(self) -> None:
         lst = self.config["scopes"]
-        self.scope = self.prompt(
-            f"{fg('blue')+' '.join(lst)+attr('reset')}\nScope: ", optional=True)
-        if self.scope not in lst:
-            self.scope = None
+        print(fg("blue") + " ".join(lst) + attr("reset"))
+        while True:
+            self.scope = self.prompt("Scope: ").strip().split()
+            for i in self.scope:
+                if i not in lst:
+                    print(fg("red") + "Space separated multiple choice" + attr("reset"))
+                    break
+            else:
+                break
 
     def commit_subject(self) -> None:
         max_length = int(self.config["subject_length"])
@@ -105,7 +110,7 @@ class Commit(object):
                 self.emoji = i["emoji"]
         commit = self.emoji + ' ' + self.type.lower()
         if self.scope:
-            commit = commit + f"({self.scope.lower()})"
+            commit = commit + "(" + ", ".join(self.scope).lower() + ")"
         if self.breaking_change:
             commit = commit + "!"
         commit = commit + ": "
