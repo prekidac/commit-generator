@@ -134,7 +134,7 @@ class Commit(object):
         questionary.print("-"*15, style=custom_style[0][1])
         questionary.print(
             "Copied to clipboard",
-            style="yellow")
+            style="#FF9D00")
 
 
 if __name__ == "__main__":
