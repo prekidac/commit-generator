@@ -6,7 +6,7 @@ import os
 from questionary import Style
 import questionary
 
-custom_style = Style([
+custom_style = [
     ('separator', '#6C6C6C'),
     ('qmark', '#FF9D00 bold'),
     ('selected', '#5F819D'),
@@ -14,7 +14,9 @@ custom_style = Style([
     ('instruction', ''),
     ('answer', '#5F819D bold'),
     ('question', '')
-])
+]
+
+style = Style(custom_style)
 
 
 class Commit(object):
@@ -43,20 +45,21 @@ class Commit(object):
         self.type = questionary.select(
             "Type of change",
             lst,
-            style=custom_style).ask()
+            style=style).ask()
 
     def commit_scope(self) -> None:
         lst = self.config["scopes"]
         self.scope = questionary.checkbox(
             "Scope",
             lst,
-            style=custom_style,
+            style=style,
             validate=lambda x: "Pick one or more" if not x else True).ask()
 
     def commit_subject(self) -> None:
         max_length = int(self.config["subject_length"])
         self.subject = questionary.text(
             "Message (what):",
+            style=style,
             validate=lambda x: f"Subject length 5 - {max_length} characters"
             if len(x) > max_length or len(x) < 5 else True).ask()
 
@@ -64,7 +67,7 @@ class Commit(object):
         self.body = self.form_lines(
             questionary.text(
                 "Description (why):",
-                style=custom_style).ask())
+                style=style).ask())
 
     def form_lines(self, raw: str) -> str:
         max_length = int(self.config["max_body_line_length"])
@@ -85,18 +88,21 @@ class Commit(object):
         return "\n".join(out)
 
     def commit_footer(self) -> None:
-        if questionary.confirm("API change:", style=custom_style).ask():
+        if questionary.confirm(
+            "API change:",
+            default=False,
+                style=style).ask():
             self.breaking_change = self.form_lines(
                 questionary.text(
                     "Describe API change:",
-                    style=custom_style,
-                    validate=lambda x: "Type" if len(x)<5 else True).ask())
+                    style=style,
+                    validate=lambda x: "Type" if len(x) < 5 else True).ask())
         else:
             self.breaking_change = False
         if self.type == "fix":
             self.fixes = questionary.text(
                 "Fixes issue no.:",
-                style=custom_style,
+                style=style,
                 validate=lambda x: "Number" if x and type(x) != int else True).ask()
         else:
             self.fixes = False
@@ -123,8 +129,12 @@ class Commit(object):
 
     def to_clipboard(self) -> None:
         pyperclip.copy(self.commit)
-        print("\n"+self.commit)
-        print("\nCopied to clipboard")
+        questionary.print("-"*15, style=custom_style[0][1])
+        print("\n"+self.commit+"\n")
+        questionary.print("-"*15, style=custom_style[0][1])
+        questionary.print(
+            "Copied to clipboard",
+            style="yellow")
 
 
 if __name__ == "__main__":
