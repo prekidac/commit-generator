@@ -5,18 +5,9 @@ from pathlib import Path
 import os
 from questionary import Style
 import questionary
+from color_schema import questionary_style
 
-custom_style = [
-    ('separator', '#6C6C6C'),
-    ('qmark', '#FF9D00 bold'),
-    ('selected', '#5F819D'),
-    ('pointer', '#FF9D00 bold'),
-    ('instruction', ''),
-    ('answer', '#5F819D bold'),
-    ('question', '')
-]
-
-style = Style(custom_style)
+style = Style(questionary_style)
 
 
 class Commit(object):
@@ -45,7 +36,7 @@ class Commit(object):
         self.type = questionary.select(
             "Type of change",
             lst,
-            style=style).ask()
+            style=style).unsafe_ask()
 
     def commit_scope(self) -> None:
         lst = self.config["scopes"]
@@ -53,7 +44,7 @@ class Commit(object):
             "Scope",
             lst,
             style=style,
-            validate=lambda x: "Pick one or more" if not x else True).ask()
+            validate=lambda x: "Pick one or more" if not x else True).unsafe_ask()
 
     def commit_subject(self) -> None:
         max_length = int(self.config["subject_length"])
@@ -61,13 +52,13 @@ class Commit(object):
             "Message (what):",
             style=style,
             validate=lambda x: f"Subject length 5 - {max_length} characters"
-            if len(x) > max_length or len(x) < 5 else True).ask()
+            if len(x) > max_length or len(x) < 5 else True).unsafe_ask()
 
     def commit_body(self) -> None:
         self.body = self.form_lines(
             questionary.text(
                 "Description (why):",
-                style=style).ask())
+                style=style).unsafe_ask())
 
     def form_lines(self, raw: str) -> str:
         max_length = int(self.config["max_body_line_length"])
@@ -96,14 +87,14 @@ class Commit(object):
                 questionary.text(
                     "Describe API change:",
                     style=style,
-                    validate=lambda x: "Type" if len(x) < 5 else True).ask())
+                    validate=lambda x: "Type" if len(x) < 5 else True).unsafe_ask())
         else:
             self.breaking_change = False
         if self.type == "fix":
             self.fixes = questionary.text(
                 "Fixes issue no.:",
                 style=style,
-                validate=lambda x: "Number" if x and type(x) != int else True).ask()
+                validate=lambda x: "Number" if x and type(x) != int else True).unsafe_ask()
         else:
             self.fixes = False
 
@@ -129,9 +120,9 @@ class Commit(object):
 
     def to_clipboard(self) -> None:
         pyperclip.copy(self.commit)
-        questionary.print("-"*15, style=custom_style[0][1])
+        questionary.print("-"*15, style=questionary_style[0][1])
         print("\n"+self.commit+"\n")
-        questionary.print("-"*15, style=custom_style[0][1])
+        questionary.print("-"*15, style=questionary_style[0][1])
         questionary.print(
             "Copied to clipboard",
             style="#FF9D00")
