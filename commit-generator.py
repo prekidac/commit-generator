@@ -79,7 +79,7 @@ class Commit(object):
         return "\n".join(out)
 
     def commit_footer(self) -> None:
-        if questionary.confirm(
+        if self.type == "change" and questionary.confirm(
             "API change:",
             default=False,
                 style=style).ask():
