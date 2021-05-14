@@ -85,7 +85,7 @@ class Commit(object):
                 style=style).ask():
             self.breaking_change = self.form_lines(
                 questionary.text(
-                    "Describe API change:",
+                    "API change (before => after):",
                     style=style,
                     validate=lambda x: "Type" if len(x) < 5 else True).unsafe_ask())
         else:
