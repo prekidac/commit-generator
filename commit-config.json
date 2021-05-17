@@ -40,7 +40,6 @@
     "max_body_line_length": "72",
     "scopes": [
         "main",
-        "markdown",
         "docs",
         "makefile",
         "config"
