@@ -5,7 +5,7 @@ from pathlib import Path
 import os
 from questionary import Style
 import questionary
-from color_schema import questionary_style
+from color_schema import questionary_style, colors_hex
 
 style = Style(questionary_style)
 
@@ -120,12 +120,12 @@ class Commit(object):
 
     def to_clipboard(self) -> None:
         pyperclip.copy(self.commit)
-        questionary.print("-"*15, style=questionary_style[0][1])
+        questionary.print("-"*15, style=colors_hex["gray"])
         print("\n"+self.commit+"\n")
-        questionary.print("-"*15, style=questionary_style[0][1])
+        questionary.print("-"*15, style=colors_hex["gray"])
         questionary.print(
             "Copied to clipboard",
-            style="#FF9D00")
+            style=colors_hex["yellow"])
 
 
 if __name__ == "__main__":
