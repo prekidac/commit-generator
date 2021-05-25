@@ -24,6 +24,14 @@ class Commit(object):
         config = os.path.join(Path.home(), ".local/share/commit-config.json")
         with open(config, "r") as f:
             self.config = json.load(f)
+        self.override_config()
+        
+    def override_config(self) -> None:
+        try:
+            with open("commit-config.json", "r") as f:
+                self.config.update(json.load(f))
+        except:
+            pass
 
     def all_types(self) -> list:
         lst = []

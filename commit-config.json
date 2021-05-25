@@ -1,47 +1,47 @@
 {
-    "gitmojis": [
-        {
-            "emoji": "➕",
-            "entity": "&#10133;",
-            "code": ":heavy_plus_sign:",
-            "name": "heavy-plus-sign",
-            "type": "add"
-        },
-        {
-            "emoji": "➖",
-            "entity": "&#10134;",
-            "code": ":heavy_minus_sign:",
-            "name": "heavy-minus-sign",
-            "type": "remove"
-          },
-          {
-            "emoji": "🔧",
-            "entity": "&#x1f527;",
-            "code": ":wrench:",
-            "name": "wrench",
-            "type": "change"
-          },
-          {
-            "emoji": "🌱",
-            "entity": "&#127793;",
-            "code": ":seedling:",
-            "name": "seedling",
-            "type": "rework"
-          },
-          {
-            "emoji": "🐛",
-            "entity": "&#x1f41b;",
-            "code": ":bug:",
-            "name": "bug",
-            "type": "fix"
-          }
-    ],
-    "subject_length": "50",
-    "max_body_line_length": "72",
-    "scopes": [
-        "main",
-        "docs",
-        "makefile",
-        "config"
-    ]
+  "gitmojis": [
+    {
+      "emoji": "➕",
+      "entity": "&#10133;",
+      "code": ":heavy_plus_sign:",
+      "name": "heavy-plus-sign",
+      "type": "add"
+    },
+    {
+      "emoji": "➖",
+      "entity": "&#10134;",
+      "code": ":heavy_minus_sign:",
+      "name": "heavy-minus-sign",
+      "type": "remove"
+    },
+    {
+      "emoji": "🔧",
+      "entity": "&#x1f527;",
+      "code": ":wrench:",
+      "name": "wrench",
+      "type": "change"
+    },
+    {
+      "emoji": "🌱",
+      "entity": "&#127793;",
+      "code": ":seedling:",
+      "name": "seedling",
+      "type": "rework"
+    },
+    {
+      "emoji": "🐛",
+      "entity": "&#x1f41b;",
+      "code": ":bug:",
+      "name": "bug",
+      "type": "fix"
+    }
+  ],
+  "subject_length": "50",
+  "max_body_line_length": "72",
+  "scopes": [
+    "main",
+    "docs",
+    "makefile",
+    "config"
+  ]
 }
