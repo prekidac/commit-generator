@@ -87,6 +87,13 @@ class Commit(object):
         return "\n".join(out)
 
     def commit_footer(self) -> None:
+        def check(x) -> None:
+            try:
+                int(x)
+                return True
+            except:
+                return "Number"
+
         if self.type == "change" and questionary.confirm(
             "API change:",
             default=False,
@@ -102,7 +109,7 @@ class Commit(object):
             self.fixes = questionary.text(
                 "Fixes issue no.:",
                 style=style,
-                validate=lambda x: "Number" if x and type(x) != int else True).unsafe_ask()
+                validate=check).unsafe_ask()
         else:
             self.fixes = False
 
