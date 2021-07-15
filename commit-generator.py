@@ -3,12 +3,8 @@ import pyperclip
 import json
 from pathlib import Path
 import os
-from questionary import Style
 import questionary
-from color_schema import questionary_style, colors_hex
-
-style = Style(questionary_style)
-
+from colored import fg, attr
 
 class Commit(object):
 
@@ -25,7 +21,7 @@ class Commit(object):
         with open(config, "r") as f:
             self.config = json.load(f)
         self.override_config()
-        
+
     def override_config(self) -> None:
         try:
             with open("commit-config.json", "r") as f:
@@ -43,30 +39,34 @@ class Commit(object):
         lst = self.all_types()
         self.type = questionary.select(
             "Type of change",
-            lst,
-            style=style).unsafe_ask()
+            lst).ask()
+        if self.type == None:
+            exit(1)
 
     def commit_scope(self) -> None:
         lst = self.config["scopes"]
         self.scope = questionary.checkbox(
             "Scope",
             lst,
-            style=style,
-            validate=lambda x: "Pick one or more" if not x else True).unsafe_ask()
+            validate=lambda x: "Pick one or more" if not x else True).ask()
+        if self.scope == None:
+            exit(1)
 
     def commit_subject(self) -> None:
         max_length = int(self.config["subject_length"])
         self.subject = questionary.text(
             "Message (what):",
-            style=style,
             validate=lambda x: f"Subject length 5 - {max_length} characters"
-            if len(x) > max_length or len(x) < 5 else True).unsafe_ask()
+            if len(x) > max_length or len(x) < 5 else True).ask()
+        if self.subject == None:
+            exit(1)
 
     def commit_body(self) -> None:
-        self.body = self.form_lines(
-            questionary.text(
-                "Description (why):",
-                style=style).unsafe_ask())
+        body = questionary.text("Description (why):").ask()
+        if body == None:
+            exit(1)
+        else:
+            self.body = self.form_lines(body)
 
     def form_lines(self, raw: str) -> str:
         max_length = int(self.config["max_body_line_length"])
@@ -89,12 +89,10 @@ class Commit(object):
     def commit_footer(self) -> None:
         if self.type == "change" and questionary.confirm(
             "API change:",
-            default=False,
-                style=style).ask():
+            default=False).ask():
             self.breaking_change = self.form_lines(
                 questionary.text(
                     "API change (before => after):",
-                    style=style,
                     validate=lambda x: "Type" if len(x) < 5 else True).unsafe_ask())
         else:
             self.breaking_change = False
@@ -108,8 +106,7 @@ class Commit(object):
         if self.type == "fix":
             self.fixes = questionary.text(
                 "Fixes issue no.:",
-                style=style,
-                validate=check).unsafe_ask()
+                validate=check).ask()
         else:
             self.fixes = False
 
@@ -118,7 +115,7 @@ class Commit(object):
         for i in lst:
             if i["type"] == self.type:
                 self.emoji = i["emoji"]
-        commit = self.emoji + ' ' + self.type.lower()
+        commit = self.emoji + " " + self.type.lower()
         if self.scope:
             commit = commit + "(" + ", ".join(self.scope).lower() + ")"
         if self.breaking_change:
@@ -135,12 +132,10 @@ class Commit(object):
 
     def to_clipboard(self) -> None:
         pyperclip.copy(self.commit)
-        questionary.print("-"*15, style=colors_hex["gray"])
+        print(fg(8)+"-"*15+attr("reset"))
         print("\n"+self.commit+"\n")
-        questionary.print("-"*15, style=colors_hex["gray"])
-        questionary.print(
-            "Copied to clipboard",
-            style=colors_hex["yellow"])
+        print(fg(8)+"-"*15+attr("reset"))
+        print(fg(3)+"Copied to clipboard"+attr("reset"))
 
 
 if __name__ == "__main__":

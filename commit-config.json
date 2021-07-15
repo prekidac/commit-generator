@@ -41,7 +41,6 @@
   "scopes": [
     "main",
     "docs",
-    "makefile",
     "config"
   ]
 }
